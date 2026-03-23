@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  netology:
+    image: docker-in-docker:latest
+    container_name: test-roles2
+    privileged: true
+    command: sleep infinity
+    restart: unless-stopped
+    volumes:
+      - ./ansible-lighthouse-role:/opt/ansible-lighthouse-role
+      - ./ansible-playbook-infra:/opt/ansible-playbook-infra
+      - ./molecule-env:/opt/molecule-env
+      - ./vector-role:/opt/vector-role
+    environment:
+      - TERM=xterm-256color
+    stdin_open: true
+    tty: true
+    networks:
+      - ansible-network
+
+networks:
+  ansible-network:
+    driver: bridge
